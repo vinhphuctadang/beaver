@@ -9,6 +9,11 @@ def init ():
 		os.mkdir (BEAVER_TEMPLATE_FOLDER)
 	pass
 
+def printList ():
+	root, dirs, files = next (os.walk (BEAVER_TEMPLATE_FOLDER))
+	for file in files:
+		print (file)
+	print ('[SUCCESS] Total {} template(s) found'.format (len (files)))
 def this (src, dest = ''):
 	if dest == '':
 		dest = os.path.basename (src)
@@ -67,8 +72,8 @@ def interface ():
 	import argparse
 	import sys
 	parser = argparse.ArgumentParser()
-	parser.add_argument("task", help="choose task to perform, either 'save' or 'make'")
-	parser.add_argument('source', type=str, help='specific the source of either "save" or "make" task');
+	parser.add_argument("task", type=str, help="choose task to perform, either 'save', 'make', or 'list'")
+	parser.add_argument('source', nargs='?', default='template', type=str, help='specific the source of either "save" or "make" task');
 	parser.add_argument("--tobe", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
 	args = parser.parse_args(sys.argv[1:])
 	
@@ -80,6 +85,8 @@ def interface ():
 		this (src, dst)
 	elif (tsk.lower () == 'make'):
 		make (src, dst)
+	elif (tsk.lower () == 'list'):
+		printList ();
 	else:
 		print ('[ERROR] Unsupported task')
 

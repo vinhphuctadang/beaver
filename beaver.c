@@ -34,7 +34,7 @@ int main(int argc, char *argv[] ) {
 		strcat (str, argv[i]);
 		strcat (str, "\"");
 	}
-//	printf ("%s ", str)	;
+//	printf ("%s\n", str)	;
 	system (str);		
 	return 0;
 }
