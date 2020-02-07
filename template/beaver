@@ -1,0 +1,68 @@
+import os
+
+BEAVER_DIR = os.path.dirname (os.path.realpath (__file__))
+BEAVER_TEMPLATE_FOLDER = BEAVER_DIR + '/template/'
+
+# TODO: Cache init
+def init ():
+	if not os.path.isdir (BEAVER_TEMPLATE_FOLDER):
+		os.mkdir (BEAVER_TEMPLATE_FOLDER)
+	pass
+
+def this (src, dest = ''):
+	if dest == '':
+		dest = os.path.basename (src)
+	dest = os.path.basename (dest)
+
+	try:
+		f = open (src, 'r', encoding='utf8')
+	except Exception as e:
+		print ('Error:', e)
+		return
+	
+	ABS_DEST_PATH = BEAVER_TEMPLATE_FOLDER + dest;
+	info = f.read ()
+	f.close ()
+
+	try:
+		g = open (ABS_DEST_PATH, 'w')
+		g.write (str (info))
+		g.close ()	
+	except Exception as e: 
+		print ('[ERROR]', e)
+		return
+	
+	print ('[SUCCESS] Make tempalte name "{}"'.format (dest))
+	pass
+
+def make (src, dest=''):
+	if dest == '':
+		dest = os.path.basename (src)
+	
+	ABS_DEST_PATH = dest
+
+	try:
+		f = open (src, 'r', encoding='utf8')		
+	except Exception as e:
+		print ('[ERROR]', e)
+		return
+	
+	info = f.read ()
+	f.close ()
+	try:
+		g = open (ABS_DEST_PATH, 'w');
+		g.write (str (info))
+		g.close ()
+	except Exception as e:
+		print ('[ERROR]', e)
+		return
+	print ('[SUCCESS] File append to ', ABS_DEST_PATH)
+
+def main ():
+	this ('beaver.py', 'beaver')
+	pass
+
+if __name__ == "__main__":
+	init ()
+	main ()
+	pass
