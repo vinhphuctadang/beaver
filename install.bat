@@ -1,0 +1,1 @@
+setx /M path "%PATH%;%CD%"
