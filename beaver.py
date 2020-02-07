@@ -67,16 +67,16 @@ def interface ():
 	import argparse
 	import sys
 	parser = argparse.ArgumentParser()
-	parser.add_argument("task", help="choose task to perform, either 'this' or 'make'")
-	parser.add_argument('source', type=str, help='specific the source of either "this" or "make" task');
-	parser.add_argument("--tobe", type=str, help='name of "this" or "make" destination file, should be abbreviation or something recalled', default='')
+	parser.add_argument("task", help="choose task to perform, either 'save' or 'make'")
+	parser.add_argument('source', type=str, help='specific the source of either "save" or "make" task');
+	parser.add_argument("--tobe", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
 	args = parser.parse_args(sys.argv[1:])
 	
 	tsk = args.task
 	src  = args.source
 	dst  = args.tobe
 
-	if (tsk.lower () == 'this'):
+	if (tsk.lower () == 'save'):
 		this (src, dst)
 	elif (tsk.lower () == 'make'):
 		make (src, dst)
