@@ -22,13 +22,18 @@ def this (src, dest = ''):
 	try:
 		f = open (src, 'r', encoding='utf8')
 	except Exception as e:
-		print ('Error:', e)
+		print ('[ERROR]', e)
 		return
 	
 	ABS_DEST_PATH = BEAVER_TEMPLATE_FOLDER + dest;
 	info = f.read ()
 	f.close ()
 
+	if os.path.isfile (ABS_DEST_PATH):
+		confirm = input ('There is a template "{}" existed, override [y/n]?'.format (dest))
+		if confirm.lower () != 'y':
+			print ('[ERROR] No template saved')
+			return
 	try:
 		g = open (ABS_DEST_PATH, 'w')
 		g.write (str (info))
@@ -37,7 +42,7 @@ def this (src, dest = ''):
 		print ('[ERROR]', e)
 		return 
 	
-	print ('[SUCCESS] Make template name "{}"'.format (dest))
+	print ('[SUCCESS] Made template name "{}"'.format (dest))
 	pass
 
 def make (src, dest=''):
@@ -88,7 +93,7 @@ def interface ():
 	elif (tsk.lower () == 'list'):
 		printList ();
 	else:
-		print ('[ERROR] Unsupported task')
+		print ('[ERROR] Unsupported task "{}"'.format (tsk.lower ()))
 
 def main ():
 	interface ()	
