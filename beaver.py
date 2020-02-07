@@ -53,7 +53,9 @@ def make (src, dest=''):
 	info = f.read ()
 	f.close ()
 	try:
-		g = open (ABS_DEST_PATH, 'a');
+		g = open (ABS_DEST_PATH, 'a+')
+		if (g.tell () > 0):
+			g.write ("\n")
 		g.write (str (info))
 		g.close ()
 	except Exception as e:
