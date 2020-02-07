@@ -74,7 +74,7 @@ def interface ():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("task", type=str, help="choose task to perform, either 'save', 'make', or 'list'")
 	parser.add_argument('source', nargs='?', default='template', type=str, help='specific the source of either "save" or "make" task');
-	parser.add_argument("--tobe", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
+	parser.add_argument("--to", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
 	args = parser.parse_args(sys.argv[1:])
 	
 	tsk = args.task
