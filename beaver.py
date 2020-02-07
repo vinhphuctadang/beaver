@@ -79,7 +79,7 @@ def interface ():
 	
 	tsk = args.task
 	src  = args.source
-	dst  = args.tobe
+	dst  = args.to
 
 	if (tsk.lower () == 'save'):
 		this (src, dst)
