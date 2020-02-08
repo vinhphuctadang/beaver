@@ -2,11 +2,15 @@ import os
 
 BEAVER_DIR = os.path.dirname (os.path.realpath (__file__))
 BEAVER_TEMPLATE_FOLDER = BEAVER_DIR + '/template/'
+NAME_LIMIT = 64
+TEMPLATE_LIST = []
 
 # TODO: Cache init
 def init ():
 	if not os.path.isdir (BEAVER_TEMPLATE_FOLDER):
 		os.mkdir (BEAVER_TEMPLATE_FOLDER)
+	root, dirs, files = next (os.walk (BEAVER_TEMPLATE_FOLDER))
+	TEMPLATE_LIST = files
 	pass
 
 def printList ():
@@ -52,6 +56,10 @@ def make (src, dest=''):
 		dest = src
 	src = BEAVER_TEMPLATE_FOLDER + src
 	
+	if len (dest) > NAME_LIMIT:
+		print ('[ERROR] Reject to store template having name with more than {} characters'.format (NAME_LIMIT))
+		return
+
 	ABS_DEST_PATH = dest
 
 	try:
