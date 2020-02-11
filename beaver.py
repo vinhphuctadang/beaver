@@ -18,6 +18,12 @@ def printList ():
 	for file in files:
 		print (file)
 	print ('[SUCCESS] Total {} template(s) found'.format (len (files)))
+'''
+	save template src->dst
+	where:
+		src indicates path/to/src
+		dst indicates name of template
+'''
 def this (src, dest = ''):
 	if dest == '':
 		dest = os.path.basename (src)
@@ -26,7 +32,7 @@ def this (src, dest = ''):
 	try:
 		f = open (src, 'r', encoding='utf8')
 	except Exception as e:
-		print ('[ERROR]', e)
+		print (f'[ERROR] Cannot open "{src}"')
 		return
 	
 	ABS_DEST_PATH = BEAVER_TEMPLATE_FOLDER + dest;
@@ -52,6 +58,7 @@ def this (src, dest = ''):
 def make (src, dest=''):
 
 	src = os.path.basename (src)
+	saved_base_name = src
 	if dest == '':
 		dest = src
 	src = BEAVER_TEMPLATE_FOLDER + src
@@ -65,7 +72,7 @@ def make (src, dest=''):
 	try:
 		f = open (src, 'r', encoding='utf8')		
 	except Exception as e:
-		print ('[ERROR]', e)
+		print (f'[ERROR] No template named "{saved_base_name}" found')
 		return
 	
 	info = f.read ()
@@ -85,31 +92,27 @@ def interface ():
 	import argparse
 	import sys
 	parser = argparse.ArgumentParser()
-	parser.add_argument("task", type=str, help="choose task to perform, either 'save', 'make', or 'list'")
-	parser.add_argument('source', nargs='?', default='template', type=str, help='specific the source of either "save" or "make" task');
-	parser.add_argument("--to", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')ve
-	
+	parser.add_argument("--list", help='list saved template', action="store_true")
+	parser.add_argument("--save", help='store following file as template', action="store_true")
+	parser.add_argument('source', type=str, nargs='?', help='source template or source file', default='template')
+	parser.add_argument('dest', type=str, nargs='?', help='destination template or destination file', default='code')
 	args = parser.parse_args(sys.argv[1:])
-	
-	tsk = args.task
-	src  = args.source
-	dst  = args.to
-	isVer = args.version
 
-	if isVer:
-		print ('Beaver version 0.0.1')
-		return
-	if (tsk.lower () == 'save'):
+	blSave = args.save
+	blList = args.list
+
+	if blList:
+		printList ()
+	elif blSave:
+		src  = args.source
+		dst  = args.dest
 		this (src, dst)
-	elif (tsk.lower () == 'make'):
-		make (src, dst)
-	elif (tsk.lower () == 'list'):
-		printList ();
 	else:
-		print ('[ERROR] Unsupported task "{}"'.format (tsk.lower ()))
-
+		src  = args.source
+		dst  = args.dest
+		make (src, dst)
 def main ():
-	interface ()	
+	interface ()
 	pass
 
 if __name__ == "__main__":
