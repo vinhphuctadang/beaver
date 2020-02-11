@@ -18,6 +18,12 @@ def printList ():
 	for file in files:
 		print (file)
 	print ('[SUCCESS] Total {} template(s) found'.format (len (files)))
+'''
+	save template src->dst
+	where:
+		src indicates path/to/src
+		dst indicates name of template
+'''
 def this (src, dest = ''):
 	if dest == '':
 		dest = os.path.basename (src)
@@ -85,26 +91,28 @@ def interface ():
 	import argparse
 	import sys
 	parser = argparse.ArgumentParser()
-	parser.add_argument("task", type=str, help="choose task to perform, either 'save', 'make', or 'list'")
-	parser.add_argument('source', nargs='?', default='template', type=str, help='specific the source of either "save" or "make" task');
-	parser.add_argument("--to", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
+	parser.add_argument('-s', '--source',  type=str, help='source template or source file', default='template')
+	parser.add_argument('-d', '--dest', type=str, help='source template or source file', default='code')
+	parser.add_argument("--save", type=bool, nargs='?', help='activate to store template', default=False)
+	parser.add_argument("--list", type=bool, nargs='?', help='list saved template', default=True)
 	args = parser.parse_args(sys.argv[1:])
 	
-	tsk = args.task
-	src  = args.source
-	dst  = args.to
+	
+	blSave = args.save
+	blList = args.list
 
-	if (tsk.lower () == 'save'):
+	if blList:
+		printList ()
+	elif blSave:
+		src  = args.src
+		dst  = args.to
 		this (src, dst)
-	elif (tsk.lower () == 'make'):
-		make (src, dst)
-	elif (tsk.lower () == 'list'):
-		printList ();
 	else:
-		print ('[ERROR] Unsupported task "{}"'.format (tsk.lower ()))
-
+		src  = args.src
+		dst  = args.to
+		make (src, dst)
 def main ():
-	interface ()	
+	interface ()
 	pass
 
 if __name__ == "__main__":
