@@ -32,7 +32,7 @@ def this (src, dest = ''):
 	try:
 		f = open (src, 'r', encoding='utf8')
 	except Exception as e:
-		print ('[ERROR]', e)
+		print (f'[ERROR] Cannot open "{src}"')
 		return
 	
 	ABS_DEST_PATH = BEAVER_TEMPLATE_FOLDER + dest;
@@ -58,6 +58,7 @@ def this (src, dest = ''):
 def make (src, dest=''):
 
 	src = os.path.basename (src)
+	saved_base_name = src
 	if dest == '':
 		dest = src
 	src = BEAVER_TEMPLATE_FOLDER + src
@@ -71,7 +72,7 @@ def make (src, dest=''):
 	try:
 		f = open (src, 'r', encoding='utf8')		
 	except Exception as e:
-		print ('[ERROR]', e)
+		print (f'[ERROR] No template named "{saved_base_name}" found')
 		return
 	
 	info = f.read ()
