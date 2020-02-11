@@ -91,25 +91,24 @@ def interface ():
 	import argparse
 	import sys
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-s', '--source',  type=str, help='source template or source file', default='template')
-	parser.add_argument('-d', '--dest', type=str, help='source template or source file', default='code')
-	parser.add_argument("--save", type=bool, nargs='?', help='activate to store template', default=False)
-	parser.add_argument("--list", type=bool, nargs='?', help='list saved template', default=True)
+	parser.add_argument("--list", help='list saved template', action="store_true")
+	parser.add_argument("--save", help='store following file as template', action="store_true")
+	parser.add_argument('source', type=str, nargs='?', help='source template or source file', default='template')
+	parser.add_argument('dest', type=str, nargs='?', help='source template or source file', default='code')
 	args = parser.parse_args(sys.argv[1:])
-	
-	
+
 	blSave = args.save
 	blList = args.list
 
 	if blList:
 		printList ()
 	elif blSave:
-		src  = args.src
-		dst  = args.to
+		src  = args.source
+		dst  = args.dest
 		this (src, dst)
 	else:
-		src  = args.src
-		dst  = args.to
+		src  = args.source
+		dst  = args.dest
 		make (src, dst)
 def main ():
 	interface ()
