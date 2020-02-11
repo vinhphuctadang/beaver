@@ -87,13 +87,18 @@ def interface ():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("task", type=str, help="choose task to perform, either 'save', 'make', or 'list'")
 	parser.add_argument('source', nargs='?', default='template', type=str, help='specific the source of either "save" or "make" task');
-	parser.add_argument("--to", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')
+	parser.add_argument("--to", type=str, help='name of "save" or "make" destination file, should be abbreviation or something recalled', default='')ve
+	
 	args = parser.parse_args(sys.argv[1:])
 	
 	tsk = args.task
 	src  = args.source
 	dst  = args.to
+	isVer = args.version
 
+	if isVer:
+		print ('Beaver version 0.0.1')
+		return
 	if (tsk.lower () == 'save'):
 		this (src, dst)
 	elif (tsk.lower () == 'make'):
