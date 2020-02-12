@@ -1,9 +1,19 @@
 import os
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 BEAVER_DIR = os.path.dirname (os.path.realpath (__file__))
 BEAVER_TEMPLATE_FOLDER = BEAVER_DIR + '/template/'
 NAME_LIMIT = 64
 TEMPLATE_LIST = []
+
 
 # TODO: Cache init
 def init ():
@@ -17,7 +27,7 @@ def printList ():
 	root, dirs, files = next (os.walk (BEAVER_TEMPLATE_FOLDER))
 	for file in files:
 		print (file)
-	print ('[SUCCESS] Total {} template(s) found'.format (len (files)))
+	print (f'{bcolors.OKGREEN}[SUCCESS] Total {len (files)} template(s) found{bcolors.ENDC}')
 '''
 	save template src->dst
 	where:
@@ -32,7 +42,7 @@ def this (src, dest = ''):
 	try:
 		f = open (src, 'r', encoding='utf8')
 	except Exception as e:
-		print (f'[ERROR] Cannot open "{src}"')
+		print (f'{bcolors.FAIL}[ERROR] Cannot open "{src}"{bcolors.ENDC}')
 		return
 	
 	ABS_DEST_PATH = BEAVER_TEMPLATE_FOLDER + dest;
@@ -42,17 +52,17 @@ def this (src, dest = ''):
 	if os.path.isfile (ABS_DEST_PATH):
 		confirm = input ('There is a template "{}" existed, override [y/n]?'.format (dest))
 		if confirm.lower () != 'y':
-			print ('[ERROR] No template saved')
+			print (f'{bcolors.FAIL}[ERROR] No template saved{bcolors.ENDC}')
 			return
 	try:
 		g = open (ABS_DEST_PATH, 'w')
 		g.write (str (info))
 		g.close ()	
 	except Exception as e: 
-		print ('[ERROR]', e)
+		print (f'{bcolors.FAIL}[ERROR] Cannot modify {ABS_DEST_PATH}{bcolors.ENDC}')
 		return 
 	
-	print ('[SUCCESS] Made template name "{}"'.format (dest))
+	print (f'{bcolors.OKGREEN}[SUCCESS] Made template name "{dest}"{bcolors.ENDC}')
 	pass
 
 def make (src, dest=''):
@@ -64,14 +74,14 @@ def make (src, dest=''):
 	src = BEAVER_TEMPLATE_FOLDER + src
 	
 	if len (dest) > NAME_LIMIT:
-		print ('[ERROR] Reject to store template having name with more than {} characters'.format (NAME_LIMIT))
+		print (f'{bcolors.FAIL}[ERROR] Reject to store template having name with more than {NAME_LIMIT} characters{bcolors.ENDC}')
 		return
 	ABS_DEST_PATH = dest
 
 	try:
 		f = open (src, 'r', encoding='utf8')		
 	except Exception as e:
-		print (f'[ERROR] No template named "{saved_base_name}" found')
+		print (f'{bcolors.FAIL}[ERROR] No template named "{saved_base_name}" found {bcolors.ENDC}')
 		return
 	
 	info = f.read ()
@@ -85,7 +95,7 @@ def make (src, dest=''):
 	except Exception as e:
 		print ('[ERROR]', e)
 		return
-	print ('[SUCCESS] File append to "{}"'.format(ABS_DEST_PATH))
+	print (f'{bcolors.OKGREEN}[SUCCESS] File append to "{ABS_DEST_PATH}"{bcolors.ENDC}')
 
 def interface ():
 	import argparse
