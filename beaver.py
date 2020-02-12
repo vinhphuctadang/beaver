@@ -66,7 +66,6 @@ def make (src, dest=''):
 	if len (dest) > NAME_LIMIT:
 		print ('[ERROR] Reject to store template having name with more than {} characters'.format (NAME_LIMIT))
 		return
-
 	ABS_DEST_PATH = dest
 
 	try:
